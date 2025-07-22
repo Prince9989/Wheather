@@ -1,68 +1,50 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Simple Weather App</title>
-  <style>
-    body {
-      font-family: Arial;
-      text-align: center;
-      margin-top: 50px;
-      background-color: #f2f2f2;
-    }
-    #weatherBox {
-      background: white;
-      padding: 20px;
-      margin: auto;
-      width: 300px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px gray;
-    }
-    input, button {
-      padding: 10px;
-      margin: 10px;
-      width: 80%;
-      font-size: 16px;
-    }
-    img {
-      width: 80px;
-    }
-  </style>
-</head>
-<body>
 
-  <h2>Weather App</h2>
-  <div id="weatherBox">
-    <input type="text" id="city" placeholder="Enter city name">
-    <br>
-    <button onclick="getWeather()">Get Weather</button>
-    <div id="result" style="margin-top:20px;"></div>
-  </div>
+ 1 Time Complexity: The time complexity of an algorithm measures the amount of time it        takes to run as a function of the input size. It describes how the runtime grows as the input size increases. Common time complexities include:
 
-  <script>
-    async function getWeather() {
-      let city = document.getElementById("city").value;
-      let apiKey = "47b9679512865ff70ee5a2795d29466e";
-      let url = https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric;
+O(1): Constant time
+O(log n): Logarithmic time
+O(n): Linear time
+O(n²): Quadratic time
 
-      let response = await fetch(url);
-      if (!response.ok) {
-        document.getElementById("result").innerHTML = "City not found.";
-        return;
-      }
+2 Space Complexity: The space complexity of an algorithm measures the amount of memory space it uses as a function of the input size. It describes how the memory usage grows as the input size increases. Common space complexities include:
 
-      let data = await response.json();
-      let temp = data.main.temp;
-      let desc = data.weather[0].description;
-      let icon = data.weather[0].icon;
+O(1): Constant space
+O(n): Linear space
 
-      document.getElementById("result").innerHTML = `
-        <h3>${data.name}, ${data.sys.country}</h3>
-        <img src="https://openweathermap.org/img/wn/${icon}@2x.png">
-        <p><b>Temperature:</b> ${temp}°C</p>
-        <p><b>Weather:</b> ${desc}</p>
-      `;
-    }
-  </script>
+3 Asymptotic notations describe the growth of an algorithm's time or space complexity as the input size increases.
 
-</body>
-</html>
+Here are the main asymptotic notations used to describe the performance of algorithms:
+
+Big O (O): Represents the upper bound of the runtime or space complexity, describing the worst-case scenario. It gives the maximum time or space an algorithm will take.
+
+Example: O(n²)
+Omega (Ω): Represents the lower bound, describing the best-case scenario or the minimum time/space an algorithm will take.
+
+Example: Ω(n)
+Theta (Θ): Represents the tight bound, where the algorithm's time/space complexity is both upper and lower bounded by the same function.
+
+Example: Θ(n log n)
+
+
+4 Merge Sort is a divide-and-conquer algorithm used for sorting. It works by recursively dividing the array into two halves, sorting each half, and then merging them back together in sorted order.
+
+Steps:
+Divide: Split the array into two halves.
+Conquer: Recursively sort each half.
+Combine: Merge the two sorted halves into a single sorted array.
+
+Time Complexity:
+Best, Worst, and Average Case: O(n log n)
+Space Complexity:
+O(n) due to the additional space required for merging.
+
+5 Quick Sort is a divide-and-conquer sorting algorithm that selects a "pivot" element and partitions the array into two sub-arrays: one with elements less than the pivot and the other with elements greater than the pivot. It then recursively sorts the sub-arrays.
+
+Steps:
+element).
+Partition: Rearrange the array so that elements less than the pivot are on the left, and those greater are on the right.
+Recursively sort: Apply the same process to the sub-arrays on the left and right of the pivot.
+Time Complexity:
+Best and Average Case: O(n log n)
+Worst Case: O(n²) (when the pivot is poorly chosen)
+Space Complexity:
