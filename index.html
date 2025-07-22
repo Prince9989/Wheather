@@ -1,50 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Weather App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #2193b0, #6dd5ed);
+      text-align: center;
+      padding: 50px;
+      margin: 0;
+    }
 
- 1 Time Complexity: The time complexity of an algorithm measures the amount of time it        takes to run as a function of the input size. It describes how the runtime grows as the input size increases. Common time complexities include:
+    .weather-container {
+      background-color: white;
+      border-radius: 10px;
+      padding: 30px;
+      display: inline-block;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    }
 
-O(1): Constant time
-O(log n): Logarithmic time
-O(n): Linear time
-O(n²): Quadratic time
+    input, button {
+      padding: 10px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
 
-2 Space Complexity: The space complexity of an algorithm measures the amount of memory space it uses as a function of the input size. It describes how the memory usage grows as the input size increases. Common space complexities include:
+    button {
+      background-color: #007BFF;
+      color: white;
+      cursor: pointer;
+    }
 
-O(1): Constant space
-O(n): Linear space
+    .weather-result {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="weather-container">
+    <h1>Weather App</h1>
+    <input type="text" id="cityInput" placeholder="Enter city name">
+    <button onclick="getWeather()">Get Weather</button>
 
-3 Asymptotic notations describe the growth of an algorithm's time or space complexity as the input size increases.
+    <div id="weatherResult" class="weather-result">
+      <!-- Weather info will be shown here -->
+    </div>
+  </div>
 
-Here are the main asymptotic notations used to describe the performance of algorithms:
+  <script>
+    async function getWeather() {
+      const city = document.getElementById('cityInput').value;
+      const result = document.getElementById('weatherResult');
 
-Big O (O): Represents the upper bound of the runtime or space complexity, describing the worst-case scenario. It gives the maximum time or space an algorithm will take.
+      if (!city) {
+        result.innerHTML = "⚠️ Please enter a city.";
+        return;
+      }
 
-Example: O(n²)
-Omega (Ω): Represents the lower bound, describing the best-case scenario or the minimum time/space an algorithm will take.
+      const apiKey = "47b9679512865ff70ee5a2795d29466e";
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
-Example: Ω(n)
-Theta (Θ): Represents the tight bound, where the algorithm's time/space complexity is both upper and lower bounded by the same function.
+      try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error("City not found");
 
-Example: Θ(n log n)
+        const data = await response.json();
 
-
-4 Merge Sort is a divide-and-conquer algorithm used for sorting. It works by recursively dividing the array into two halves, sorting each half, and then merging them back together in sorted order.
-
-Steps:
-Divide: Split the array into two halves.
-Conquer: Recursively sort each half.
-Combine: Merge the two sorted halves into a single sorted array.
-
-Time Complexity:
-Best, Worst, and Average Case: O(n log n)
-Space Complexity:
-O(n) due to the additional space required for merging.
-
-5 Quick Sort is a divide-and-conquer sorting algorithm that selects a "pivot" element and partitions the array into two sub-arrays: one with elements less than the pivot and the other with elements greater than the pivot. It then recursively sorts the sub-arrays.
-
-Steps:
-element).
-Partition: Rearrange the array so that elements less than the pivot are on the left, and those greater are on the right.
-Recursively sort: Apply the same process to the sub-arrays on the left and right of the pivot.
-Time Complexity:
-Best and Average Case: O(n log n)
-Worst Case: O(n²) (when the pivot is poorly chosen)
-Space Complexity:
+        result.innerHTML = `
+          <h2>${data.name}, ${data.sys.country}</h2>
+          <p><strong>Temperature:</strong> ${data.main.temp}°C</p>
+          <p><strong>Weather:</strong> ${data.weather[0].description}</p>
+          <p><strong>Humidity:</strong> ${data.main.humidity}%</p>
+          <p><strong>Wind Speed:</strong> ${data.wind.speed} m/s</p>
+        `;
+      } catch (error) {
+        result.innerHTML = `❌ Error: ${error.message}`;
+      }
+    }
+  </script>
+</body>
+</html>
